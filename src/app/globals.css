@@ -1,15 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Syne+Mono&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: "concielian";
+  src: url("/fonts/concv2e.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ddd;
+  --foreground: #333;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "concielian", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-mono: "Syne Mono", monospace;
+  --font-mono2: "Press Start 2P", system-ui;
+  --font-mono3: "Press Start 2P", system-ui;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +33,51 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: var(--font-sans); */
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 0.6rem;
+  line-height: 1.2rem;
+  font-family: var(--font-mono2);
+}
+
+.page-text {
+  position: relative;
+  z-index: 1;
+}
+
+.corner-bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: currentColor;
+  border-style: solid;
+}
+
+.corner-bracket.top-left {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.corner-bracket.top-right {
+  top: 0;
+  right: 0;
+  border-width: 1px 1px 0 0;
+}
+
+.corner-bracket.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1px 1px;
+}
+
+.corner-bracket.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1px 1px 0;
 }
