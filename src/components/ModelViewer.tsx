@@ -63,6 +63,8 @@ export function ModelViewer({ src }: Props) {
         "camera-controls": true,
         // Auto-rotate stays enabled on mobile; removed in effect on desktop
         "auto-rotate": true,
+        // Disable the built-in "finger" interaction prompt
+        "interaction-prompt": "none",
         // Disable zoom completely
         "disable-zoom": true,
         style: {
