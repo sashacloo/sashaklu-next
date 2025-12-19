@@ -11,6 +11,7 @@ export type PostType = {
   body?: any[];
   images?: ImageRef[];
   glbfile?: string;
+  category?: "info" | "link" | "hero";
 };
 
 type Props = {
