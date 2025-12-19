@@ -33,7 +33,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen w-full">
       <div className="mx-auto px-4 py-4">
-        <header className="sticky top-4 z-10 flex items-start justify-between text-sm leading-none">
+        <header className="sticky top-4 z-10 flex items-start justify-between text-sm leading-none fade-seq" style={{ animationDelay: "3s" }}>
           <div className="lowercase">sasha klu</div>
           <a
             href="https://instagram.com/stealthy00"
@@ -45,31 +45,47 @@ export default async function Home() {
           </a>
         </header>
 
-        <section className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-[240px_1fr_240px]">
-          <div className="order-2 md:order-1 flex flex-col gap-6">
-            {infoPosts.map((post) => (
-              <Post key={post._id} post={post} />
-            ))}
-          </div>
-
-          <div className="order-1 md:order-2 flex flex-col items-center gap-10 md:min-h-[calc(100vh-188px)] md:justify-center">
+        <section className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[240px_1fr_240px]">
+          <div
+            className="lg:order-2 flex flex-col items-center gap-10 lg:min-h-[calc(100vh-188px)] lg:justify-center fade-seq"
+            style={{ animationDelay: "1s" }}
+          >
             {heroPost?.glbfile && (
               <div className="pt-4">
                 <ModelViewer src={heroPost.glbfile} />
               </div>
             )}
-
-            {/* {heroPost && (
-              <div className="w-full">
-                <Post post={heroPost} />
-              </div>
-            )} */}
           </div>
 
-          <div className="order-3 md:order-3 flex flex-col gap-6">
-            {linkPosts.map((post) => (
-              <Post key={post._id} post={post} />
-            ))}
+          <div className="lg:order-1 flex flex-col gap-6">
+            {infoPosts.map((post, index) => {
+              const delay = 4 + index * 0.5;
+              return (
+                <div
+                  key={post._id}
+                  className="fade-seq"
+                  style={{ animationDelay: `${delay}s` }}
+                >
+                  <Post post={post} />
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="lg:order-3 flex flex-col gap-6">
+            {linkPosts.map((post, index) => {
+              const baseDelay = 6 + infoPosts.length * 0.5 + 1; // after all info posts + 1s gap
+              const delay = baseDelay + index * 0.5;
+              return (
+                <div
+                  key={post._id}
+                  className="fade-seq"
+                  style={{ animationDelay: `${delay}s` }}
+                >
+                  <Post post={post} />
+                </div>
+              );
+            })}
           </div>
         </section>
       </div>
