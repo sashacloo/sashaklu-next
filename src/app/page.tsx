@@ -63,7 +63,7 @@ export default async function Home() {
               return (
                 <div
                   key={post._id}
-                  className="fade-seq"
+                  className="fade-seq info-post"
                   style={{ animationDelay: `${delay}s` }}
                 >
                   <Post post={post} />
@@ -74,7 +74,7 @@ export default async function Home() {
 
           <div className="lg:order-3 flex flex-col gap-6">
             {linkPosts.map((post, index) => {
-              const baseDelay = 6 + infoPosts.length * 0.5 + 1; // after all info posts + 1s gap
+              const baseDelay = 5 + infoPosts.length * 0.5 ; // after all info posts + 1s gap
               const delay = baseDelay + index * 0.5;
               return (
                 <div
