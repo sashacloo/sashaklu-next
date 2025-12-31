@@ -9,8 +9,19 @@
 }
 
 :root {
-  --background: #ddd;
-  --foreground: #333;
+  /* default to light; can be overridden by prefers-color-scheme or data-theme */
+  --background: #cccccc;
+  --foreground: #222222;
+}
+
+html[data-theme="light"] {
+  --background: #cccccc;
+  --foreground: #222222;
+}
+
+html[data-theme="dark"] {
+  --background: #222222;
+  --foreground: #cccccc;
 }
 
 @theme inline {
@@ -23,20 +34,22 @@
   --font-mono3: "Press Start 2P", system-ui;
 }
 
+/* If no explicit data-theme is set, follow the system preference */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html:not([data-theme]) {
+    --background: #222222;
+    --foreground: #cccccc;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   /* font-family: var(--font-sans); */
   font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.4;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .fade-seq {

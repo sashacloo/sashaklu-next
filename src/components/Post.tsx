@@ -1,4 +1,8 @@
+"use client";
+
+import { useRef } from "react";
 import { PortableText } from "@portabletext/react";
+import { ModelViewer } from "@/components/ModelViewer";
 
 export type ImageRef = {
   assetId?: string;
@@ -22,6 +26,14 @@ type Props = {
 };
 
 export function Post({ post }: Props) {
+  const linkModelRef = useRef<any | null>(null);
+
+  const setLinkSpinSpeed = (speed: "slow" | "fast") => {
+    const el = linkModelRef.current as any | null;
+    if (!el) return;
+    el.setAttribute("rotation-per-second", speed === "fast" ? "120deg" : "30deg");
+  };
+
   const getFirstUrlFromBody = (body: any[] | undefined): string | undefined => {
     if (!body) return undefined;
 
@@ -45,14 +57,19 @@ export function Post({ post }: Props) {
     const imageUrl = firstImage?.asset?.url;
 
     const box = (
-      <div className="page-copy-container relative w-full max-w-[700px] mx-auto my-4 pt-[1rem] pr-[0.5rem] pb-[0.8rem] pl-[1.2rem]">
+      <div className="page-wrapper relative w-full max-w-[700px] mx-auto my-4 p-4">
         <div className="corner-bracket top-left bracket-visible" />
         <div className="corner-bracket top-right bracket-visible" />
         <div className="corner-bracket bottom-left bracket-visible" />
         <div className="corner-bracket bottom-right bracket-visible" />
 
-        <div className="page-text page-text-visible text-center">
-          {imageUrl && (
+        <div className="page-content flex flex-col justify-center w-full h-full text-center">
+          {post.glbfile && (
+            <div className="mb-3 flex justify-center">
+              <ModelViewer src={post.glbfile} variant="link" externalRef={linkModelRef} />
+            </div>
+          )}
+          {!post.glbfile && imageUrl && (
             <div className="mb-3 flex justify-center">
               {/* TODO: recreate SanityImage behavior using @sanity/image-url */}
               <img
@@ -68,27 +85,29 @@ export function Post({ post }: Props) {
     );
 
     return (
-      <article className="post">
-        <div className="post-content">
-          {href ? (
-            <a
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              className="block no-underline"
-            >
-              {box}
-            </a>
-          ) : (
-            box
-          )}
-        </div>
+      <article
+        className="post flex w-full"
+        onMouseEnter={() => setLinkSpinSpeed("fast")}
+        onMouseLeave={() => setLinkSpinSpeed("slow")}
+      >
+        {href ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="flex w-full no-underline"
+          >
+            {box}
+          </a>
+        ) : (
+          box
+        )}
       </article>
     );
   }
 
   return (
-    <article className="post">
+    <article className="post flex w-full">
       {(() => {
         const firstImage = post.images?.[0];
         const imageUrl = firstImage?.asset?.url;
@@ -101,14 +120,14 @@ export function Post({ post }: Props) {
         );
       })()}
 
-      <div className="post-content">
+      <div className="post-content flex w-full h-full">
         <div className="page-copy-container relative w-full max-w-[700px] mx-auto my-4 pt-[1rem] pr-[0.5rem] pb-[0.8rem] pl-[1.2rem]">
           <div className="corner-bracket top-left bracket-visible" />
           <div className="corner-bracket top-right bracket-visible" />
           <div className="corner-bracket bottom-left bracket-visible" />
           <div className="corner-bracket bottom-right bracket-visible" />
 
-          <div className="page-text page-text-visible">
+          <div className="page-content">
             {post.title && <h2 className="post-title">{post.title}</h2>}
             {post.body && (
               <div className="post-body">

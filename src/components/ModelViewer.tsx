@@ -5,12 +5,17 @@ import Script from "next/script";
 
 type Props = {
   src: string;
+  variant?: "hero" | "link";
+  externalRef?: React.RefObject<any>;
 };
 
-export function ModelViewer({ src }: Props) {
-  const viewerRef = useRef<any | null>(null);
+export function ModelViewer({ src, variant = "hero", externalRef }: Props) {
+  const internalRef = useRef<any | null>(null);
+  const viewerRef = (externalRef as React.RefObject<any> | undefined) ?? internalRef;
 
   useEffect(() => {
+    if (variant !== "hero") return;
+
     const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
     const el = viewerRef.current as any | null;
 
@@ -48,7 +53,7 @@ export function ModelViewer({ src }: Props) {
     return () => {
       window.removeEventListener("mousemove", handleMove);
     };
-  }, []);
+  }, [variant]);
 
   return (
     <>
@@ -60,16 +65,17 @@ export function ModelViewer({ src }: Props) {
       {React.createElement("model-viewer" as any, {
         ref: viewerRef,
         src,
-        "camera-controls": true,
-        // Auto-rotate stays enabled on mobile; removed in effect on desktop
+        // Only heroes should be user-interactive; link variants are display-only
+        "camera-controls": variant === "hero",
+        // Auto-rotate stays enabled (for heroes it is turned off on desktop via the effect)
         "auto-rotate": true,
         // Disable the built-in "finger" interaction prompt
         "interaction-prompt": "none",
         // Disable zoom completely
         "disable-zoom": true,
         style: {
-          width: "280px",
-          height: "280px",
+          width: variant === "hero" ? "280px" : "120px",
+          height: variant === "hero" ? "280px" : "120px",
           maxWidth: "100%",
         },
       })}
