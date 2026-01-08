@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, MouseEvent } from "react";
 import { PortableText } from "@portabletext/react";
 import { ModelViewer } from "@/components/ModelViewer";
 
@@ -28,10 +28,38 @@ type Props = {
 export function Post({ post }: Props) {
   const linkModelRef = useRef<any | null>(null);
 
+  const [tilt, setTilt] = useState<{ rotateX: number; rotateY: number }>({
+    rotateX: 0,
+    rotateY: 0,
+  });
+
+  const handleCardMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const target = event.currentTarget as HTMLElement | null;
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const xNorm = x / rect.width - 0.5; // -0.5 .. 0.5
+    const yNorm = y / rect.height - 0.5; // -0.5 .. 0.5
+
+    // Stronger tilt that leans TOWARD the cursor
+    const maxTilt = 14; // degrees (was 8)
+    const rotateY = xNorm * maxTilt * 2;
+    const rotateX = -yNorm * maxTilt * 2;
+
+    setTilt({ rotateX, rotateY });
+  };
+
+  const resetTilt = () => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+  };
+
   const setLinkSpinSpeed = (speed: "slow" | "fast") => {
     const el = linkModelRef.current as any | null;
     if (!el) return;
-    el.setAttribute("rotation-per-second", speed === "fast" ? "120deg" : "30deg");
+    el.setAttribute("rotation-per-second", speed === "fast" ? "180deg" : "30deg");
   };
 
   const getFirstUrlFromBody = (body: any[] | undefined): string | undefined => {
@@ -88,7 +116,15 @@ export function Post({ post }: Props) {
       <article
         className="post flex w-full"
         onMouseEnter={() => setLinkSpinSpeed("fast")}
-        onMouseLeave={() => setLinkSpinSpeed("slow")}
+        onMouseMove={handleCardMouseMove}
+        onMouseLeave={() => {
+          setLinkSpinSpeed("slow");
+          resetTilt();
+        }}
+        style={{
+          transform: `perspective(900px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+          transition: "transform 0.25s ease-out",
+        }}
       >
         {href ? (
           <a
@@ -107,7 +143,15 @@ export function Post({ post }: Props) {
   }
 
   return (
-    <article className="post flex w-full">
+    <article
+      className="post flex w-full"
+      onMouseMove={handleCardMouseMove}
+      onMouseLeave={resetTilt}
+      style={{
+        transform: `perspective(900px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+        transition: "transform 0.25s ease-out",
+      }}
+    >
       {(() => {
         const firstImage = post.images?.[0];
         const imageUrl = firstImage?.asset?.url;
