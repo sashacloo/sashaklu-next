@@ -14,6 +14,7 @@ export type ImageRef = {
 };
 
 export type PostType = {
+  publishedAt: string | number | Date;
   _id: string;
   title?: string;
   body?: any[];

@@ -28,7 +28,11 @@ export default async function Home() {
 
   const infoPosts = posts.filter((post) =>
     (post.category ?? "info") === "info" && post._id !== heroPost?._id
-  );
+  ).sort((a, b) => {
+    const aDate = new Date(a.publishedAt).getTime();
+    const bDate = new Date(b.publishedAt).getTime();
+    return aDate - bDate;
+  });
 
   const linkPosts = posts.filter((post) => post.category === "link");
 
@@ -57,7 +61,7 @@ export default async function Home() {
             {
               role: "left",
               className:
-                "max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1",
+                "max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
               children: infoPosts.map((post, index) => {
                 const delay = 3 + index * 0.7;
                 return (

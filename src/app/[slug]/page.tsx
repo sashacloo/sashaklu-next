@@ -87,7 +87,7 @@ export default async function SlugPage({ params }: PageProps) {
               // Left column: info posts (third on mobile)
               role: "left",
               className:
-                "max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1",
+                "max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
               children: infoPosts.map((post) => (
                 <div key={post._id} className="flex info-post">
                   <Post post={post} />
