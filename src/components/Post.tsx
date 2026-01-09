@@ -165,14 +165,14 @@ export function Post({ post }: Props) {
         );
       })()}
 
-      <div className="post-content flex w-full h-full">
-        <div className="page-copy-container relative w-full max-w-[700px] mx-auto my-4 pt-[0.7rem] pr-[0.5rem] pb-[0.8rem] pl-[1.2rem]">
+      <div className="post-content-wrapper flex w-full h-full">
+        <div className="post-content-container relative w-full max-w-[700px] mx-auto my-4 pt-[0.7rem] pr-[0.5rem] pb-[0.8rem] pl-[1.2rem]">
           <div className="corner-bracket top-left bracket-visible" />
           <div className="corner-bracket top-right bracket-visible" />
           <div className="corner-bracket bottom-left bracket-visible" />
           <div className="corner-bracket bottom-right bracket-visible" />
 
-          <div className="page-content">
+          <div className="post-content">
             {post.title && <h2 className="title">{post.title}</h2>}
             {post.body && (
               <div className="post-body">

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { PortableTextComponents } from "@portabletext/react";
 
 export const portableTextComponents: PortableTextComponents = {
@@ -5,6 +6,7 @@ export const portableTextComponents: PortableTextComponents = {
     link: ({ value, children }) => {
       const href = (value as any)?.href || "";
       const isExternal = /^https?:\/\//i.test(href);
+      const isInternal = href.startsWith("/");
 
       if (isExternal) {
         return (
@@ -14,6 +16,11 @@ export const portableTextComponents: PortableTextComponents = {
         );
       }
 
+      if (isInternal) {
+        return <Link href={href}>{children}</Link>;
+      }
+
+      // Fallback for other schemes (mailto:, tel:, anchors, etc.)
       return <a href={href}>{children}</a>;
     },
   },

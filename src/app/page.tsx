@@ -44,7 +44,7 @@ export default async function Home() {
             {
               role: "center",
               className:
-                "flex flex-col items-center gap-10 lg:min-h-[calc(100vh-188px)] lg:justify-center",
+                "flex flex-col items-center gap-10 lg:min-h-[calc(100vh-202px)] lg:justify-center",
               children:
                 heroPost?.glbfile ? (
                   <InitialFade delay={1}>

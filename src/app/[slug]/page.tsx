@@ -59,7 +59,7 @@ export default async function SlugPage({ params }: PageProps) {
               children: (
                 <>
                   {page.title && (
-                    <h1 className="title mb-5 lowercase">{page.title}</h1>
+                    <h1 className="title mb-[18px] lowercase">{page.title}</h1>
                   )}
                   {page.body && (
                     <div className="prose prose-sm max-w-none dark:prose-invert">

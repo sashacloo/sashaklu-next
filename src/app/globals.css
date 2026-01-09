@@ -96,10 +96,6 @@ h1, h2, h3, h4, h5, h6,
   z-index: 1;
 }
 
-/* .info-post {
-  user-select: none;
-} */
-
 .info-post:last-child {
   user-select: text;
 }
@@ -113,6 +109,16 @@ h1, h2, h3, h4, h5, h6,
     transform: scale(1.05);
   }
 }
+
+/* .post-content-wrapper {
+  background-color: yellow;
+}
+.post-content-container {
+  background-color: blueviolet;
+}
+.post-content {
+  background-color: greenyellow;
+} */
 
 .corner-bracket {
   position: absolute;
