@@ -12,16 +12,19 @@
   /* default to light; can be overridden by prefers-color-scheme or data-theme */
   --background: #cccccc;
   --foreground: #222222;
+  --accent: #0000ff;
 }
 
 html[data-theme="light"] {
   --background: #cccccc;
   --foreground: #222222;
+  --accent: #0000ff;
 }
 
 html[data-theme="dark"] {
   --background: #222222;
   --foreground: #cccccc;
+  --accent: #ff5500;
 }
 
 @theme inline {
@@ -39,6 +42,7 @@ html[data-theme="dark"] {
   html:not([data-theme]) {
     --background: #222222;
     --foreground: #cccccc;
+    --accent: #ff5500;
   }
 }
 
@@ -50,6 +54,15 @@ body {
   font-size: 14px;
   line-height: 1.4;
   transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--accent);
+  transition: color 0.3s ease;
 }
 
 .fade-seq {
@@ -71,8 +84,9 @@ body {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-size: 0.6rem;
+h1, h2, h3, h4, h5, h6,
+.title {
+  font-size: 0.62rem;
   line-height: 1.2rem;
   font-family: var(--font-mono2);
 }
@@ -82,9 +96,9 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
-.info-post {
+/* .info-post {
   user-select: none;
-}
+} */
 
 .info-post:last-child {
   user-select: text;
@@ -130,4 +144,11 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
   right: 0;
   border-width: 0 1px 1px 0;
+}
+
+.slug-page a {
+  display: inline-block;
+  font-family: var(--font-mono2);
+  font-size: .65rem;
+  transform: translateY(0.11em);
 }

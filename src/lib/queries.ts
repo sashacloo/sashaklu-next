@@ -38,20 +38,18 @@ export const postsQuery = `
   'posts': *[_type == 'post'] | order(_createdAt asc)${postQuery}
 `;
 
-export const pageQuery = `
-  'page': *[_type == 'page' && slug.current == $slug][0]{
+export const pageQuery = `{
+  ...,
+  slides[]{
     ...,
-    slides[]{
+    _type == 'imageObject' => ${imageQuery},
+    _type == 'videoObject' => {
       ...,
-      _type == 'imageObject' => ${imageQuery},
-      _type == 'videoObject' => {
-        ...,
-        video${videoQuery}
-      },
+      video${videoQuery}
     },
-    images[]${imageQuery},
-  }
-`;
+  },
+  images[]${imageQuery},
+}`;
 
 export const siteQuery = `
   'site': *[_type == 'site'][0]{

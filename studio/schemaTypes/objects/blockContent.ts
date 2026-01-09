@@ -39,6 +39,11 @@ export default {
                 title: 'URL', 
                 name: 'href',
                 type: 'url',
+                validation: Rule => Rule.uri({
+                  // Allow full URLs and local paths starting with '/'
+                  scheme: ['http', 'https', 'tel', 'mailto'],
+                  allowRelative: true,
+                }),
               },
             ],
           },

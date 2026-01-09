@@ -3,6 +3,7 @@
 import { useRef, useState, MouseEvent } from "react";
 import { PortableText } from "@portabletext/react";
 import { ModelViewer } from "@/components/ModelViewer";
+import { portableTextComponents } from "@/lib/portableTextComponents";
 
 export type ImageRef = {
   assetId?: string;
@@ -107,7 +108,7 @@ export function Post({ post }: Props) {
               />
             </div>
           )}
-          {post.title && <h2 className="post-title">{post.title}</h2>}
+          {post.title && <h2 className="title">{post.title}</h2>}
         </div>
       </div>
     );
@@ -165,17 +166,17 @@ export function Post({ post }: Props) {
       })()}
 
       <div className="post-content flex w-full h-full">
-        <div className="page-copy-container relative w-full max-w-[700px] mx-auto my-4 pt-[1rem] pr-[0.5rem] pb-[0.8rem] pl-[1.2rem]">
+        <div className="page-copy-container relative w-full max-w-[700px] mx-auto my-4 pt-[0.7rem] pr-[0.5rem] pb-[0.8rem] pl-[1.2rem]">
           <div className="corner-bracket top-left bracket-visible" />
           <div className="corner-bracket top-right bracket-visible" />
           <div className="corner-bracket bottom-left bracket-visible" />
           <div className="corner-bracket bottom-right bracket-visible" />
 
           <div className="page-content">
-            {post.title && <h2 className="post-title">{post.title}</h2>}
+            {post.title && <h2 className="title">{post.title}</h2>}
             {post.body && (
               <div className="post-body">
-                <PortableText value={post.body} />
+                <PortableText value={post.body} components={portableTextComponents} />
               </div>
             )}
           </div>
