@@ -24,7 +24,7 @@ export default async function Home() {
   const posts = data?.posts || [];
 
   const heroPosts = posts.filter((post) => post.category === "hero");
-  const heroPost = heroPosts[heroPosts.length - 1];
+  const heroPost = heroPosts[0];
 
   const infoPosts = posts.filter((post) =>
     (post.category ?? "info") === "info" && post._id !== heroPost?._id
@@ -48,7 +48,7 @@ export default async function Home() {
             {
               role: "center",
               className:
-                "flex flex-col items-center gap-10 lg:min-h-[calc(100vh-202px)] lg:justify-center",
+                "flex flex-col items-center gap-10 lg:min-h-[calc(100vh-100px)] lg:justify-center",
               children:
                 heroPost?.glbfile ? (
                   <InitialFade delay={1}>
@@ -61,7 +61,7 @@ export default async function Home() {
             {
               role: "left",
               className:
-                "max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
+                "max-w-[700px] mx-auto grid gap-x-16 gap-y-5 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
               children: infoPosts.map((post, index) => {
                 const delay = 3 + index * 0.7;
                 return (

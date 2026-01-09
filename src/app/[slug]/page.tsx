@@ -42,7 +42,13 @@ export default async function SlugPage({ params }: PageProps) {
     notFound();
   }
 
-  const infoPosts = posts.filter((post) => (post.category ?? "info") === "info");
+  const infoPosts = posts.filter((post) =>
+    (post.category ?? "info") === "info"
+  ).sort((a, b) => {
+    const aDate = new Date(a.publishedAt).getTime();
+    const bDate = new Date(b.publishedAt).getTime();
+    return aDate - bDate;
+  });
   const linkPosts = posts.filter((post) => post.category === "link");
 
   return (
@@ -55,7 +61,7 @@ export default async function SlugPage({ params }: PageProps) {
             {
               // Center column: page content
               role: "center",
-              className: "slug-page mx-auto max-w-[700px] py-7 lg:pl-[calc(4vw-30px)]",
+              className: "slug-page mx-auto max-w-[700px] lg:min-h-[calc(100vh-100px)] py-7 lg:pl-[calc(4vw-30px)]",
               children: (
                 <>
                   {page.title && (
@@ -87,7 +93,7 @@ export default async function SlugPage({ params }: PageProps) {
               // Left column: info posts (third on mobile)
               role: "left",
               className:
-                "max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
+                "max-w-[700px] mx-auto grid gap-x-16 gap-y-5 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
               children: infoPosts.map((post) => (
                 <div key={post._id} className="flex info-post">
                   <Post post={post} />

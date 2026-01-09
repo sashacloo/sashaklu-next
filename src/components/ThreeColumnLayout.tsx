@@ -21,7 +21,7 @@ const roleOrderClass: Record<ColumnRole, string> = {
 
 export function ThreeColumnLayout({ items }: Props) {
   return (
-    <section className="mt-16 grid grid-cols-1 gap-x-16 gap-y-10 lg:grid-cols-[240px_1fr_240px]">
+    <section className="mt-16 lg:mt-[calc(10vh-50px)] grid grid-cols-1 gap-x-16 gap-y-10 lg:grid-cols-[240px_1fr_240px] xl:grid-cols-[310px_1fr_310px]">
       {items.map((item, index) => (
         <div
           key={index}
