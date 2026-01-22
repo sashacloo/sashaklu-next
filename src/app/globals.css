@@ -66,6 +66,7 @@ a:hover {
   transition: color 0.3s ease;
 }
 
+
 .fade-seq {
   opacity: 0;
   animation-name: fade-seq-in;
@@ -74,8 +75,10 @@ a:hover {
   animation-fill-mode: forwards;
 }
 
-model-viewer::part(progress-bar) {
-  display: none;
+model-viewer::part(default-progress-bar),
+model-viewer::part(progress-bar),
+model-viewer::part(bar) {
+  display: none !important;
 }
 
 @keyframes fade-seq-in {

@@ -116,7 +116,7 @@ export function Post({ post }: Props) {
 
     return (
       <article
-        className="post flex w-full"
+        className="post link-post flex w-full"
         onMouseEnter={() => setLinkSpinSpeed("fast")}
         onMouseMove={handleCardMouseMove}
         onMouseLeave={() => {
@@ -146,7 +146,7 @@ export function Post({ post }: Props) {
 
   return (
     <article
-      className="post flex w-full"
+      className="post info-post flex w-full"
       onMouseMove={handleCardMouseMove}
       onMouseLeave={resetTilt}
       style={{

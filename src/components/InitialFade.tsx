@@ -15,15 +15,8 @@ export function InitialFade({ children, delay = 0 }: Props) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const alreadySeen = window.sessionStorage.getItem(STORAGE_KEY);
-    if (alreadySeen) {
-      setAnimate(false);
-      return;
-    }
-
-    // First time: run animation and remember
+    // Always run animation on mount
     setAnimate(true);
-    window.sessionStorage.setItem(STORAGE_KEY, "1");
   }, []);
 
   if (!animate) {

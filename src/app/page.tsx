@@ -1,10 +1,13 @@
 import { sanityClient } from "@/lib/sanityClient";
 import { postsQuery, siteQuery } from "@/lib/queries";
-import { Post, type PostType } from "@/components/Post";
+import { type PostType } from "@/components/Post";
 import { ModelViewer } from "@/components/ModelViewer";
 import { Header } from "@/components/Header";
 import { ThreeColumnLayout } from "@/components/ThreeColumnLayout";
 import { InitialFade } from "@/components/InitialFade";
+import { buildPostsSideColumns } from "@/components/PostsColumns";
+
+export const dynamic = "force-dynamic";
 
 type HomeData = {
   posts: PostType[];
@@ -36,6 +39,10 @@ export default async function Home() {
 
   const linkPosts = posts.filter((post) => post.category === "link");
 
+  const sideColumns = buildPostsSideColumns(infoPosts, linkPosts, {
+    enableFade: true,
+  });
+
   return (
     <main className="min-h-screen w-full">
       <div className="mx-auto px-4 py-4">
@@ -48,7 +55,7 @@ export default async function Home() {
             {
               role: "center",
               className:
-                "flex flex-col items-center gap-10 lg:min-h-[calc(100vh-100px)] lg:justify-center",
+                "flex flex-col items-center gap-10 lg:min-h-[calc(100vh-202px)] lg:justify-center",
               children:
                 heroPost?.glbfile ? (
                   <InitialFade delay={1}>
@@ -58,41 +65,7 @@ export default async function Home() {
                   </InitialFade>
                 ) : null,
             },
-            {
-              role: "left",
-              className:
-                "max-w-[700px] mx-auto grid gap-x-16 gap-y-5 sm:grid-cols-2 lg:grid-cols-1 lg:items-start",
-              children: infoPosts.map((post, index) => {
-                const delay = 3 + index * 0.7;
-                return (
-                  <InitialFade key={post._id} delay={delay}>
-                    <div
-                      className={`flex info-post ${
-                        index === 0 ? "sm:col-span-2 lg:col-span-1" : ""
-                      }`}
-                    >
-                      <Post post={post} />
-                    </div>
-                  </InitialFade>
-                );
-              }),
-            },
-            {
-              role: "right",
-              className:
-                "w-full max-w-[700px] mx-auto grid gap-x-16 gap-y-10 sm:grid-cols-2 lg:grid-cols-1",
-              children: linkPosts.map((post, index) => {
-                const baseDelay = 4 + infoPosts.length * 0.7; // after all info posts + 1s gap
-                const delay = baseDelay + index * 0.7;
-                return (
-                  <InitialFade key={post._id} delay={delay}>
-                    <div className="flex">
-                      <Post post={post} />
-                    </div>
-                  </InitialFade>
-                );
-              }),
-            },
+            ...sideColumns,
           ]}
         />
       </div>
