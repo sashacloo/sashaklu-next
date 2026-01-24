@@ -68,7 +68,7 @@ export default async function SlugPage({ params }: PageProps) {
             {
               // Center column: page content
               role: "center",
-              className: "slug-page mx-auto max-w-[700px] py-7 lg:pl-[calc(4vw-30px)]",
+              className: "slug-page mx-auto max-w-[700px] py-7 lg:py-0 lg:pl-[calc(4vw-30px)]",
               children: (
                 <>
                   {page.title && (

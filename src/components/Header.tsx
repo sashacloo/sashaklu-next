@@ -8,14 +8,14 @@ export function Header() {
         sasha klu
       </Link>
       <div className="flex items-center gap-3">
-        <a
+        {/* <a
           href="https://instagram.com/stealthy00"
           target="_blank"
           rel="noreferrer"
           className="lowercase mr-6"
         >
           ig
-        </a>
+        </a> */}
         <ThemeToggle />
       </div>
     </header>
